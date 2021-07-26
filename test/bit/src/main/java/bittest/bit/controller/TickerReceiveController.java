@@ -16,13 +16,16 @@ public class TickerReceiveController {
 
     @Value("${api-key}")
     private String key;
+    @Value("${test1}")
+    private String test;
 
     @RequestMapping("/get-ticker")
     @ResponseBody
     public void receive() throws IOException {
         URL add = new URL("https://api.bithumb.com/info/balance");
         HttpURLConnection con = (HttpURLConnection) add.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("test","test");
+        System.out.println(key + test);
+//        con.setRequestMethod("POST");
+//        con.setRequestProperty("test","test");
     }
 }
