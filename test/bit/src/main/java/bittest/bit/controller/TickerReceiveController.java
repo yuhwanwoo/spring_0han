@@ -23,6 +23,6 @@ public class TickerReceiveController {
         URL add = new URL("https://api.bithumb.com/info/balance");
         HttpURLConnection con = (HttpURLConnection) add.openConnection();
         con.setRequestMethod("POST");
-        con.setRequestProperty();
+        con.setRequestProperty("test","test");
     }
 }
