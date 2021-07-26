@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -17,7 +19,10 @@ public class TickerReceiveController {
 
     @RequestMapping("/get-ticker")
     @ResponseBody
-    public void receive() throws MalformedURLException {
+    public void receive() throws IOException {
         URL add = new URL("https://api.bithumb.com/info/balance");
+        HttpURLConnection con = (HttpURLConnection) add.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty();
     }
 }
