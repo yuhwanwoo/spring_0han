@@ -45,31 +45,33 @@ public class TickerReceiveController {
         return changer.readLine();
     }
 
-    @RequestMapping(value = "/orderbook", method = RequestMethod.GET)
+    @RequestMapping(value = "/order", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public String receive() throws IOException {
+    public void receive() throws IOException {
         URL add = new URL("https://api.bithumb.com/public/orderbook/BTC_KRW");
         HttpURLConnection con = (HttpURLConnection) add.openConnection();
         con.setRequestMethod("GET");
- //       con.setRequestProperty("count", "1");
+//        con.setRequestProperty("count", "1");
 //        con.setRequestProperty("secretKey", secKey);
         con.setDoOutput(true);
         OutputStream out = con.getOutputStream();
         DataOutputStream dataSend = new DataOutputStream(out);
 //        dataSend.writeBytes("&apiKey=" + conKey + "&secretKey=" + secKey);
-        dataSend.writeBytes("&count=1");
+//        dataSend.writeBytes("&count=1");
         dataSend.close();
 
         int res = con.getResponseCode();
         InputStream receive;
 
         if(res == 200){
+            System.out.println("suc");
             receive = con.getInputStream();
         }else {
+            System.out.println("fail");
             receive = con.getErrorStream();
         }
         InputStreamReader reader = new InputStreamReader(receive);
         BufferedReader changer = new BufferedReader(reader);
-        return changer.readLine();
+        System.out.println(changer.readLine());
     }
 }
