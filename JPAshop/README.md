@@ -319,3 +319,26 @@ public class JpaMain {
 
 ```
 
+
+
+
+
+### 다른 테이블 예시
+
+![](./table02.PNG)
+
+![](./Category.PNG)
+
+![](./Delivery.PNG)
+
+![](./DeliveryStatus.PNG)
+
+![](./Item.PNG)
+
+![](./Member.PNG)
+
+![](./Order.PNG)
+
+![](./OrderItem.PNG)
+
+![](./OrderStatus.PNG)
