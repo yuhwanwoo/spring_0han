@@ -24,7 +24,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.200</version>
+            <version>1.4.199</version>
         </dependency>
         <!-- 자바 11 이용 시 오류 해결 -->
         <dependency>
