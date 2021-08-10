@@ -342,3 +342,8 @@ public class JpaMain {
 ![](./OrderItem.PNG)
 
 ![](./OrderStatus.PNG)
+
+
+
+### 값 타입 매핑
+

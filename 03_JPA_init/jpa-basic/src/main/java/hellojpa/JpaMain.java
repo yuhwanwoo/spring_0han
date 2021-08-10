@@ -28,8 +28,8 @@ public class JpaMain {
             member.getFavoriteFoods().add("족발");
             member.getFavoriteFoods().add("피자");
 
-            member.getAddressHistory().add(new Address("old1", "street", "10000"));
-            member.getAddressHistory().add(new Address("old2", "street", "10000"));
+            member.getAddressHistory().add(new AddressEntity("old1", "street", "10000"));
+            member.getAddressHistory().add(new AddressEntity("old2", "street", "10000"));
 
             em.persist(member);
 
@@ -39,16 +39,6 @@ public class JpaMain {
             System.out.println("============== START ==============");
             Member findMember = em.find(Member.class, member.getId());
 
-            List<Address> addressesHistory = findMember.getAddressHistory();
-            for (Address address : addressesHistory) {
-                System.out.println("address = " + address.getCity());
-            }
-
-            Set<String> favoriteFoods = findMember.getFavoriteFoods();
-            for (String favoriteFood : favoriteFoods) {
-                System.out.println("favoriteFood = " + favoriteFood);
-            }
-
             // homeCity -> newCity
             Address a = findMember.getHomeAddress();
             findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
@@ -57,8 +47,8 @@ public class JpaMain {
             findMember.getFavoriteFoods().remove("치킨");
             findMember.getFavoriteFoods().add("한식");
 
-            findMember.getAddressHistory().remove(new Address("old1", "street", "10000"));
-            findMember.getAddressHistory().add(new Address("newCity1", "street", "10000"));
+//            findMember.getAddressHistory().remove(new Address("old1", "street", "10000"));
+//            findMember.getAddressHistory().add(new Address("newCity1", "street", "10000"));
 
             tx.commit();
         } catch (Exception e) {
