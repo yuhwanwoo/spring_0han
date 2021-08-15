@@ -16,31 +16,25 @@ public class JpaMain {
 
         try {
 
-            Team team = new Team();
-            team.setName("teamA");
-            em.persist(team);
+            Member member1 = new Member();
+            member1.setUsername("관리자1");
+            em.persist(member1);
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setAge(10);
-            member.setTeam(team);
+            Member member2 = new Member();
+            member2.setUsername("관리자2");
+            em.persist(member2);
 
-            em.persist(member);
 
             em.flush();
             em.clear();
 
-//            String query = "select m from Member m inner join m.team t";
-            String query = "select m from Member m left join m.team t";
-//            String query = "select (select avg(m1.age) From Member m1) as avgAge from Member m join Team t where m.username = t.name";
-            List<Member> result = em.createQuery(query, Member.class)
-                    .getResultList();
 
-            System.out.println("result = " + result.size());
+            String query = "select function('group_concat', m.username) From Member m";
 
-            System.out.println("result.size() = " + result.size());
-            for (Member member1 : result) {
-                System.out.println("member1 = " + member1);
+            List<String> result = em.createQuery(query, String.class).getResultList();
+
+            for (String s : result) {
+                System.out.println("s = " + s);
             }
 
             tx.commit();
