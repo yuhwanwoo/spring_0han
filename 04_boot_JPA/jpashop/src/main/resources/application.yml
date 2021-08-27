@@ -11,8 +11,9 @@ spring:
     properties:
       hibernate:
 #        show_sql: true
-        format: true
+        format_sql: true
 
 logging:
   level:
     org.hibernate.SQL: debug
+    org.hibernate.type: trace
