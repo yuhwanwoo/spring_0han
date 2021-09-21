@@ -73,4 +73,6 @@ public class OrderRepository {
                                     " join fetch o.member m" +
                                     " join fetch o.delivery", Order.class).getResultList();
     }
+
+
 }
