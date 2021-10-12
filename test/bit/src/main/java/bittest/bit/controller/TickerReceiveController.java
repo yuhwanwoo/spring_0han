@@ -82,13 +82,14 @@ public class TickerReceiveController {
     }
 
 
-    @RequestMapping("/get-movies")
+    @RequestMapping(value = "/get-papa", method = RequestMethod.GET)
     @ResponseBody
-    public void getMovies() throws IOException {
+    public void getPapa() throws IOException {
 
 //        String clientId = "${client_id}";//애플리케이션 클라이언트 아이디값";
 //        String clientSecret = "${client_sec}";//애플리케이션 클라이언트 시크릿값";
         System.out.println(clientId);
+        System.out.println(clientSecret);
         try {
             String text = URLEncoder.encode("안녕하세요. 오늘 기분은 어떻습니까?", "UTF-8");
             String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
@@ -105,6 +106,7 @@ public class TickerReceiveController {
             wr.flush();
             wr.close();
             int responseCode = con.getResponseCode();
+            System.out.println(responseCode);
             BufferedReader br;
             if(responseCode==200) { // 정상 호출
                 br = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -121,5 +123,44 @@ public class TickerReceiveController {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @RequestMapping(value = "/get-movies", method = RequestMethod.GET)
+    @ResponseBody
+    public String getMovies() throws IOException {
+
+//        String clientId = "${client_id}";//애플리케이션 클라이언트 아이디값";
+//        String clientSecret = "${client_sec}";//애플리케이션 클라이언트 시크릿값";
+        System.out.println(clientId);
+        System.out.println(clientSecret);
+        try {
+            String text = URLEncoder.encode("한국", "UTF-8");
+            String apiURL = "https://openapi.naver.com/v1/search/movie.json?query=" + text;
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("X-Naver-Client-Id", clientId);
+            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+
+            int responseCode = con.getResponseCode();
+            System.out.println(responseCode);
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            System.out.println(response.toString());
+            return response.toString();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return "";
     }
 }
