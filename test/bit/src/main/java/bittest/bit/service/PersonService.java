@@ -33,11 +33,12 @@ public class PersonService {
             Board board = Board.createVote(member, petName);
 
             entityManager.persist(board);
-            entityManager.flush();
+            entityManager.merge(board);
 
         } catch (Exception e) {
             throw new PersonNotFoundException();
         }
 
     }
+
 }

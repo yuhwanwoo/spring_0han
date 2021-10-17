@@ -16,7 +16,7 @@ public class Member {
     @Column(nullable = false, name = "first_name")
     private String firstName;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "member")
     private List<Board> boards = new ArrayList<>();
 
     public String getFirstName() {

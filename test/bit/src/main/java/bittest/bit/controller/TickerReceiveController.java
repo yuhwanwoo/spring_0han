@@ -1,11 +1,10 @@
 package bittest.bit.controller;
 
+import bittest.bit.service.PersonService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -14,6 +13,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 @Controller
+@RequiredArgsConstructor
 public class TickerReceiveController {
 
     @Value("${conKey}")
@@ -162,5 +162,15 @@ public class TickerReceiveController {
             System.out.println(e);
         }
         return "";
+    }
+
+
+    private final PersonService personService;
+
+    @GetMapping("/add-board")
+    public String create() {
+        personService.addPet(1L, "pup");
+
+        return "redirect:/";
     }
 }
