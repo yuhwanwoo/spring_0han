@@ -2,8 +2,8 @@ package bittest.bit.domain;
 
 import javax.persistence.*;
 
-public @Entity
-class Board {
+@Entity
+public class Board {
 
     @Id
     @GeneratedValue
