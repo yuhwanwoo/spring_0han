@@ -174,6 +174,7 @@ public class TickerReceiveController {
         return "redirect:/";
     }
 
+    // https://api.ncloud-docs.com/docs/ai-naver-mapsgeocoding
     @RequestMapping(value = "/get-geo", method = RequestMethod.GET)
     @ResponseBody
     public String getGeo() throws IOException {
