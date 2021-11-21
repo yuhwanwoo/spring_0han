@@ -26,6 +26,9 @@ public class TickerReceiveController {
     @Value("${client_sec}")
     private String clientSecret;
 
+    @Value("${tmap_id}")
+    private String tmap_id;
+
     @RequestMapping("/get-ticker")
     @ResponseBody
     public String getTicker() throws IOException {
@@ -125,22 +128,28 @@ public class TickerReceiveController {
         }
     }
 
-    @RequestMapping(value = "/get-movies", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-tmap-test", method = RequestMethod.GET)
     @ResponseBody
     public String getMovies() throws IOException {
-
-//        String clientId = "${client_id}";//애플리케이션 클라이언트 아이디값";
-//        String clientSecret = "${client_sec}";//애플리케이션 클라이언트 시크릿값";
         System.out.println(clientId);
         System.out.println(clientSecret);
         try {
             String text = URLEncoder.encode("한국", "UTF-8");
-            String apiURL = "https://openapi.naver.com/v1/search/movie.json?query=" + text;
+            String apiURL = "https://apis.openapi.sk.com/tmap/pois?"
+                    + "version=" + "1"
+                    + "&searchKeyword=" + "%EB%A7%9B%EC%A7%91"
+                    + "&areaLLCode=" + "11"
+                    + "&areaLMCode=" + "410"
+                    + "&searchType=" + "name"
+                    + "&appKey=" + tmap_id;
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("X-Naver-Client-Id", clientId);
-            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+
+            con.setDoOutput(true);
+
+
+            System.out.println(con.getURL().toString());
 
             int responseCode = con.getResponseCode();
             System.out.println(responseCode);
@@ -179,18 +188,14 @@ public class TickerReceiveController {
     @ResponseBody
     public String getGeo() throws IOException {
 
-//        String clientId = "${client_id}";//애플리케이션 클라이언트 아이디값";
-//        String clientSecret = "${client_sec}";//애플리케이션 클라이언트 시크릿값";
-        System.out.println(clientId);
-        System.out.println(clientSecret);
+        System.out.println(tmap_id);
         try {
             String text = URLEncoder.encode("한국", "UTF-8");
             String apiURL = "https://openapi.naver.com/v1/search/movie.json?query=" + text;
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("X-Naver-Client-Id", clientId);
-            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+
 
             int responseCode = con.getResponseCode();
             System.out.println(responseCode);
