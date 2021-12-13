@@ -131,8 +131,7 @@ public class TickerReceiveController {
     @RequestMapping(value = "/get-tmap-test", method = RequestMethod.GET)
     @ResponseBody
     public String getMovies() throws IOException {
-        System.out.println(clientId);
-        System.out.println(clientSecret);
+
         try {
             String text = URLEncoder.encode("한국", "UTF-8");
             String apiURL = "https://apis.openapi.sk.com/tmap/pois?"
@@ -174,15 +173,6 @@ public class TickerReceiveController {
     }
 
 
-    private final PersonService personService;
-
-    @GetMapping("/add-board")
-    public String create() {
-        personService.addPet(1L, "pup");
-
-        return "redirect:/";
-    }
-
     // https://api.ncloud-docs.com/docs/ai-naver-mapsgeocoding
     @RequestMapping(value = "/get-geo", method = RequestMethod.GET)
     @ResponseBody
@@ -194,6 +184,44 @@ public class TickerReceiveController {
             String apiURL = "https://openapi.naver.com/v1/search/movie.json?query=" + text;
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+
+
+            int responseCode = con.getResponseCode();
+            System.out.println(responseCode);
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            System.out.println(response.toString());
+            return response.toString();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return "";
+    }
+
+    @Value("${kakao_id}")
+    private String kakao_id;
+
+    @RequestMapping(value = "/get-kakao", method = RequestMethod.GET)
+    @ResponseBody
+    public String getKakao() throws IOException {
+
+        try {
+            String text = URLEncoder.encode("맛집", "UTF-8");
+            String apiURL = "https://dapi.kakao.com/v2/local/search/keyword.JSON?query=" + text;
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestProperty("Authorization", "KakaoAK " + kakao_id);
             con.setRequestMethod("GET");
 
 
