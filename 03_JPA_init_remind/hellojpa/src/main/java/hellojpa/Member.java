@@ -1,7 +1,6 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity // Entity는 JPA에서 관리하는 것임을 나타냄
 public class Member {
@@ -12,9 +11,6 @@ public class Member {
 
     @Column(name = "USERNAME")
     private String username;
-
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
 
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
