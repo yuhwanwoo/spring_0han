@@ -25,7 +25,7 @@ public class JpaMain {
             team.setName("teamA");
             team.getMembers().add(member);
             em.persist(team);
-            
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
