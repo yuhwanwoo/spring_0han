@@ -29,6 +29,7 @@ public class Member {
     @CollectionTable(name = "ADDRESS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
     private List<Address> addressHistory = new ArrayList<>();
 
+
     public Long getId() {
         return id;
     }
