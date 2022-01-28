@@ -1,4 +1,4 @@
-package hellojpa;
+package jpql;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,11 +14,9 @@ public class JpaMain {
         tx.begin();
         try {
 
-            List<Member> result = em.createQuery("select m From Member m where m.username like '%kim%'", Member.class).getResultList();
-
-            for (Member member : result) {
-                System.out.println("member = " + member);
-            }
+            Member member = new Member();
+            member.setUsername("member1");
+            em.persist(member);
 
 
             tx.commit();
