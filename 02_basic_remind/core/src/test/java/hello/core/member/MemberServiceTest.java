@@ -1,4 +1,4 @@
-package hello.core.Member;
+package hello.core.member;
 
 import hello.core.AppConfig;
 import org.assertj.core.api.Assertions;
