@@ -30,4 +30,8 @@ public class UserDTO {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String test() {
+        return null;
+    }
 }
