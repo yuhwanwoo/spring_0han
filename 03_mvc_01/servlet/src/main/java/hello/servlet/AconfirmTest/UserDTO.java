@@ -2,8 +2,16 @@ package hello.servlet.AconfirmTest;
 
 import lombok.Builder;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 @Builder
-public class UserDTO {
+public class UserDTO extends Option{
+
+    @GeneratedValue
+    @Id
     private Long id;
     private String username;
 
@@ -13,6 +21,15 @@ public class UserDTO {
     public UserDTO(Long id, String username) {
         this.id = id;
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "code='" + code + '\'' +
+                ", id=" + id +
+                ", username='" + username + '\'' +
+                '}';
     }
 
     public Long getId() {

@@ -12,5 +12,7 @@ public class OptionalConfirm {
 
         System.out.println("aLong = " + aLong);
         System.out.println("s = " + s);
+
+        System.out.println(new UserDTO());
     }
 }
