@@ -1,6 +1,9 @@
 package hello.servlet.AconfirmTest;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class OptionalConfirm {
     public static void main(String[] args) {
@@ -14,5 +17,12 @@ public class OptionalConfirm {
         System.out.println("s = " + s);
 
         System.out.println(new UserDTO());
+
+        List<String> strings =
+                Arrays.asList("google", "apple", "google", "apple", "samsung");
+
+        Stream<String> stream1 = strings.stream();
+        Stream<String> stream2 = stream1.distinct();
+        stream2.forEach(System.out::println);
     }
 }
