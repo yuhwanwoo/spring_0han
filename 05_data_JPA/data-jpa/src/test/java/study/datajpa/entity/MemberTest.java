@@ -50,6 +50,7 @@ public class MemberTest {
     }
 
     @Test
+    @Transactional
     public void JpaEventBaseEntity() throws Exception {
         //given
         Member member = new Member("member1");
@@ -62,6 +63,8 @@ public class MemberTest {
         Member findMember = memberRepository.findById(member.getId()).get();
         //then
         System.out.println("findMember.createdDate = " + findMember.getCreatedDate());
-        System.out.println("findMember.updatedDate = " + findMember.getUpdatedDate());
+        System.out.println("findMember.updatedDate = " + findMember.getLastModifiedDate());
+        System.out.println("findMember.getCreatedBy() = " + findMember.getCreatedBy());
+        System.out.println("findMember.getLastModifiedBy() = " + findMember.getLastModifiedBy());
     }
 }
