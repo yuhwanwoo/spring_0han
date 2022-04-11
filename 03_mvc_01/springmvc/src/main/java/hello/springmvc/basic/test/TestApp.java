@@ -5,5 +5,8 @@ public class TestApp {
         User user = new User("kim", "서울");
 
         System.out.println("user = " + user);
+
+
+
     }
 }
