@@ -41,7 +41,6 @@ class QuerydslApplicationTests {
 		assertThat(result.getId()).isEqualTo(hello.getId());
 	}
 
-	@Autowired
 	private MockMvc mockMvc;
 
 	@Test
