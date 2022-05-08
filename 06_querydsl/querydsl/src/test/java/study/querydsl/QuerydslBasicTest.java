@@ -4,7 +4,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -20,7 +19,6 @@ import study.querydsl.dto.QMemberDto;
 import study.querydsl.dto.UserDto;
 import study.querydsl.entity.Member;
 import study.querydsl.entity.QMember;
-import study.querydsl.entity.QTeam;
 import study.querydsl.entity.Team;
 
 import javax.persistence.EntityManager;
@@ -30,7 +28,6 @@ import javax.persistence.PersistenceUnit;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static study.querydsl.entity.QMember.member;
 import static study.querydsl.entity.QTeam.*;
@@ -646,7 +643,7 @@ public class QuerydslBasicTest {
         return queryFactory
                 .selectFrom(member)
 //                .where(usernameEq(usernameCond), ageEq(ageCond))
-                .where(allEq(usernameCond, ageCond))
+                .where(isServicable(usernameCond, ageCond))
                 .fetch();
     }
 
@@ -658,7 +655,62 @@ public class QuerydslBasicTest {
         return usernameCond != null ? member.username.eq(usernameCond) : null;
     }
 
-    private BooleanExpression allEq(String usernameCond, Integer ageCond) {
+    // 광고 상태 isValid, 날짜가 IN: isServicable
+    private BooleanExpression isServicable(String usernameCond, Integer ageCond) {
         return usernameEq(usernameCond).and(ageEq(ageCond));
+    }
+
+    @Test
+    public void bulkUpdate() {
+
+        //member1 = 10 -> DB member1
+        //member2 = 20 -> DB member2
+        //member3 = 30 -> DB member3
+        //member4 = 40 -> DB member4
+
+        long count = queryFactory
+                .update(member)
+                .set(member.username, "비회원")
+                .where(member.age.lt(28))
+                .execute();
+
+        //member1 = 10 -> DB 비회원
+        //member2 = 20 -> DB 비회원
+        //member3 = 30 -> DB member3
+        //member4 = 40 -> DB member4
+
+        /**
+         * 그런데 이 벌크 연산은 영속성 컨텍스트 무시하고 바로 db에 업데이트 한다. 그래서 불일치 발생
+         * 그리고 값을 가져올 때, 영속성 컨텍스트에 값이 있다면 그 것이 우선권을 가지므로 출력하면 member1을
+         * 출력해도 username이 member1으로 찍히게 된다.
+         * 그래서 flush랑 clear를 하는게 좋다.
+         */
+
+        em.flush();
+        em.clear();
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .fetch();
+
+        for (Member member1 : result) {
+            System.out.println("member1 = " + member1);
+        }
+    }
+
+    @Test
+    public void bulkAdd() {
+        long count = queryFactory
+                .update(member)
+                .set(member.age, member.age.add(1))
+                .execute();
+    }
+
+    @Test
+    public void bulkDelete() {
+        long count = queryFactory
+                .delete(member)
+                .where(member.age.gt(10))
+                .execute();
     }
 }
