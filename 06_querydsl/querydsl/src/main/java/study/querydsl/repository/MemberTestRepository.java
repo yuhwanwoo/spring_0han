@@ -36,6 +36,7 @@ public class MemberTestRepository extends Querydsl4RepositorySupport {
 
     public Page<Member> searchPageByApplyPage(MemberSearchCondition condition, Pageable pageable) {
         JPAQuery<Member> query = selectFrom(member)
+                .leftJoin(member.team, team)
                 .where(
                         usernameEq(condition.getUsername()),
                         teamNameEq(condition.getTeamName()),
@@ -47,15 +48,47 @@ public class MemberTestRepository extends Querydsl4RepositorySupport {
         return PageableExecutionUtils.getPage(content, pageable, query::fetchCount);
     }
 
+    public Page<Member> applyPagination(MemberSearchCondition condition, Pageable pageable) {
+        return applyPagination(pageable, query ->
+                query.selectFrom(member)
+                        .leftJoin(member.team, team)
+                        .where(usernameEq(condition.getUsername()),
+                                teamNameEq(condition.getTeamName()),
+                                ageGoe(condition.getAgeGoe()),
+                                ageLoe(condition.getAgeLoe())));
+    }
+
+    public Page<Member> applyPagination2(MemberSearchCondition condition, Pageable pageable) {
+        return applyPagination(pageable, query ->
+                query.selectFrom(member)
+                        .leftJoin(member.team, team)
+                        .where(usernameEq(condition.getUsername()),
+                                teamNameEq(condition.getTeamName()),
+                                ageGoe(condition.getAgeGoe()),
+                                ageLoe(condition.getAgeLoe())
+                        ), countQuery -> countQuery
+                .select(member.id)
+                .from(member)
+                .leftJoin(member.team, team)
+                .where(usernameEq(condition.getUsername()),
+                        teamNameEq(condition.getTeamName()),
+                        ageGoe(condition.getAgeGoe()),
+                        ageLoe(condition.getAgeLoe()))
+        );
+    }
+
     private BooleanExpression usernameEq(String username) {
         return hasText(username) ? member.username.eq(username) : null;
     }
+
     private BooleanExpression teamNameEq(String teamName) {
-        return hasText(teamName) ? team.name.eq(teamName): null;
+        return hasText(teamName) ? team.name.eq(teamName) : null;
     }
+
     private BooleanExpression ageGoe(Integer ageGoe) {
         return ageGoe != null ? member.age.goe(ageGoe) : null;
     }
+
     private BooleanExpression ageLoe(Integer ageLoe) {
         return ageLoe != null ? member.age.loe(ageLoe) : null;
     }
