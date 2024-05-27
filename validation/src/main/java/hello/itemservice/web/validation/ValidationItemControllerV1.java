@@ -22,6 +22,13 @@ public class ValidationItemControllerV1 {
 
     private final ItemRepository itemRepository;
 
+    @GetMapping("/a/{userId}")
+    @ResponseBody
+    public Item test(@PathVariable Long userId) {
+        itemRepository.findById(userId);
+        return new Item("dt", 100, userId.intValue());
+    }
+
     @GetMapping
     public String items(Model model) {
         List<Item> items = itemRepository.findAll();
