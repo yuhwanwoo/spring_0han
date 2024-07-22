@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**");
     }
 
-    @Bean
+//    @Bean
     public FilterRegistrationBean logFilter() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new LogFilter());
