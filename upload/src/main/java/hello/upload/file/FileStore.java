@@ -1,4 +1,4 @@
-package hello.upload;
+package hello.upload.file;
 
 import hello.upload.domain.UploadFile;
 import org.springframework.beans.factory.annotation.Value;
