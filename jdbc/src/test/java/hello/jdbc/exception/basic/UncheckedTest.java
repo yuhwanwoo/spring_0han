@@ -44,7 +44,8 @@ public class UncheckedTest {
          * 체크 예외와 다르게 throws 예외 선언을 하지 않아도 된다. */
         public void callThrow() {
             repository.call();
-        } }
+        }
+    }
 
     static class Repository {
         public void call() {
