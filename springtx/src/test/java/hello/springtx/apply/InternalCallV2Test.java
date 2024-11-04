@@ -13,7 +13,6 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @SpringBootTest
 public class InternalCallV2Test {
     @Autowired
-
     CallService callService;
     @Test
     void externalCallV2() {
