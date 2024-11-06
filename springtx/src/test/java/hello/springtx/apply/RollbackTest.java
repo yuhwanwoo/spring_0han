@@ -44,7 +44,8 @@ public class RollbackTest {
 
     @Slf4j
     static class RollbackService {
-        //런타임 예외 발생: 롤백 @Transactional
+        //런타임 예외 발생: 롤백
+         @Transactional
         public void runtimeException() {
             log.info("call runtimeException");
             throw new RuntimeException();
