@@ -24,4 +24,14 @@ class OrderServiceTest {
         assertThat(findOrder.getPayStatus()).isEqualTo("완료");
     }
 
+    @Test
+    void runtimeException() {
+//given
+        Order order = new Order(); order.setUsername("예외");
+        //when, then
+        assertThatThrownBy(() -> orderService.order(order))
+                .isInstanceOf(RuntimeException.class);
+//then: 롤백되었으므로 데이터가 없어야 한다.
+        Optional<Order> orderOptional = orderRepository.findById(order.getId()); assertThat(orderOptional.isEmpty()).isTrue();
+    }
 }
