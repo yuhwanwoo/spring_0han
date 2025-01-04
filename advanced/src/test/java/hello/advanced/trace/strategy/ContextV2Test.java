@@ -16,5 +16,22 @@ public class ContextV2Test {
         context.execute(new StrategyLogic2());
     }
 
-
+    /**
+     * 전략 패턴 익명 내부 클래스 */
+    @Test
+    void strategyV2() {
+        ContextV2 context = new ContextV2();
+        context.execute(new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직1 실행");
+            }
+        });
+        context.execute(new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직2 실행");
+            }
+        });
+    }
 }
