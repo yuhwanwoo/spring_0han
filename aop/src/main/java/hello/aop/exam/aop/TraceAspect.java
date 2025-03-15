@@ -1,4 +1,4 @@
-package hello.aop.exam;
+package hello.aop.exam.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
